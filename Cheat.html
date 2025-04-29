@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Strategy Cheat Sheet</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6e9bcf;
+            --dark-text: #333;
+            --light-text: #fff;
+            --bg-color: #f5f8fc;
+            --card-bg: #fff;
+            --border-color: #ddd;
+            --header-bg: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --alt-bg: #e8f4fd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--dark-text);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+        
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 12px;
+            background: var(--alt-bg);
+            border-radius: 8px;
+        }
+        
+        .color-tag {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .tag-green {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-left: 3px solid var(--success-color);
+        }
+        
+        .tag-orange {
+            background-color: rgba(243, 156, 18, 0.2);
+            border-left: 3px solid var(--warning-color);
+        }
+        
+        .tag-red {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-left: 3px solid var(--danger-color);
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--light-text);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto 30px;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            width: fit-content;
+            background-color: var(--card-bg);
+        }
+
+        .tab {
+            padding: 12px 25px;
+            background-color: var(--card-bg);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary-color);
+            border: none;
+            border-right: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .tab:last-child {
+            border-right: none;
+        }
+
+        .tab.active {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+        }
+
+        .subsection {
+            margin-bottom: 20px;
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+        }
+
+        th {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .example-box {
+            background-color: #e8f4fd;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .note-box {
+            background-color: #fef9e6;
+            border-left: 4px solid #f1c40f;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .good {
+            background-color: rgba(46, 204, 113, 0.15);
+        }
+
+        .warning {
+            background-color: rgba(243, 156, 18, 0.15);
+        }
+
+        .danger {
+            background-color: rgba(231, 76, 60, 0.15);
+        }
+
+        .step {
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .recommendation-box {
+            background-color: #e8f8f5;
+            border-left: 4px solid #1abc9c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-style: italic;
+            color: #777;
+            padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .tab {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .tab:last-child {
+                border-bottom: none;
+            }
+
+            .section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Game Strategy Cheat Sheet</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="openTab('basics')">Basic Knowledge</button>
+            <button class="tab" onclick="openTab('examples')">Practical Example</button>
+            <button class="tab" onclick="openTab('advanced')">Advanced Tactics</button>
+            <button class="tab" onclick="openTab('formations')">Formations</button>
+            <button class="tab" onclick="openTab('heroes')">Heroes & Familiars</button>
+        </div>
+
+        <div id="basics" class="tab-content active">
+            <div class="section">
+                <h2 class="section-title">📜 BASIC KNOWLEDGE ABOUT COMPS, POWER, AND FORMATIONS</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">1. 💪 What is a "Comp" (Composition)?</h3>
+                    <p>Comp = Troop distribution: Infantry / Range / Cavalry.</p>
+                    <p>Always scaled to 20 points.</p>
+                    
+                    <div class="example-box">
+                        <h4>Examples:</h4>
+                        <ul>
+                            <li>659 = 6 Inf / 5 Range / 9 Cav</li>
+                            <li>866 = 8 Inf / 6 Range / 6 Cav</li>
+                            <li>4412 = 4 Inf / 4 Range / 12 Cav</li>
+                        </ul>
+                        
+                        <h4>Rule:</h4>
+                        <ul>
+                            <li>Always add parts to 20.</li>
+                            <li>If not → double or normalize.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">2. ⚡️ What is a "Formation"?</h3>
+                    <p>Formation = Which type of troops are deployed FIRST in the fight.</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Formation Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Infantry Phalanx</td>
+                                <td>Infantry front</td>
+                            </tr>
+                            <tr>
+                                <td>Range Phalanx</td>
+                                <td>Range front</td>
+                            </tr>
+                            <tr>
+                                <td>Cavalry Phalanx</td>
+                                <td>Cavalry front</td>
+                            </tr>
+                            <tr>
+                                <td>Infantry Wedge</td>
+                                <td>Wide Inf spread</td>
+                            </tr>
+                            <tr>
+                                <td>Range Wedge</td>
+                                <td>Wide Range spread</td>
+                            </tr>
+                            <tr>
+                                <td>Cavalry Wedge</td>
+                                <td>Wide Cav spread</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">3. 🔪 How to Instantly Read a Comp</h3>
+                    <ul>
+                        <li>First number = Infantry parts</li>
+                        <li>Second number = Range parts</li>
+                        <li>Third number = Cavalry parts</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Examples:</h4>
+                        <ul>
+                            <li>659 → 6 Inf, 5 Range, 9 Cav</li>
+                            <li>866 → 8 Inf, 6 Range, 6 Cav</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="note-box">
+                        <strong>Note:</strong> If comp looks weird (ex: 4-3-5)? Double it to normalize (becomes 8-6-10).
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">4. 📊 Correct Matchups - Formation vs Comp</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Enemy Type</th>
+                                <th>Best Formation</th>
+                                <th>Why</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Heavy Infantry</td>
+                                <td>Cavalry Phalanx</td>
+                                <td>Melt infantry fast</td>
+                            </tr>
+                            <tr>
+                                <td>Heavy Range</td>
+                                <td>Infantry Phalanx / Range Wedge</td>
+                                <td>Delay Cav death, kill Range</td>
+                            </tr>
+                            <tr>
+                                <td>Heavy Cavalry</td>
+                                <td>Range Phalanx</td>
+                                <td>Shred cav before they reach you</td>
+                            </tr>
+                            <tr>
+                                <td>Balanced Enemy</td>
+                                <td>Depends: Scout first</td>
+                                <td>Match to enemy frontline</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">5. 💪 Color Code For Fights</h3>
+                    <div class="color-legend">
+                        <div class="color-tag tag-green">🟢 Green: Good fight, likely win</div>
+                        <div class="color-tag tag-orange">🟠 Orange: 50/50, formation & speed matters</div>
+                        <div class="color-tag tag-red">🔴 Red: Bad fight unless major stat advantage</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Color</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="good">
+                                <td>🟢 Green</td>
+                                <td>Good fight, likely win</td>
+                            </tr>
+                            <tr class="warning">
+                                <td>🟠 Orange</td>
+                                <td>50/50, formation & speed matters</td>
+                            </tr>
+                            <tr class="danger">
+                                <td>🔴 Red</td>
+                                <td>Bad fight unless major stat advantage</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">6. 📏 Troop Counting Guide</h3>
+                    <p>Quick reference for troop count to comp conversion:</p>
+                    <ul>
+                        <li>700K-800K troops = 4 parts</li>
+                        <li>900K-1M troops = 5 parts</li>
+                        <li>1.3M-1.4M troops = 6 parts</li>
+                        <li>1.4M-1.55M troops = 7 parts</li>
+                        <li>1.6M-1.7M troops = 8 parts</li>
+                        <li>1.7M-1.9M troops = 9 parts</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Example Calculation:</h4>
+                        <p>A 659 comp would be approximately:</p>
+                        <ul>
+                            <li>1.5M Infantry</li>
+                            <li>900K Range</li>
+                            <li>1.6M Cavalry</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="examples" class="tab-content">
+            <div class="section">
+                <h2 class="section-title">📈 REAL BATTLE REPORT ANALYSIS</h2>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Battle Report 1: Cavalry Phalanx vs Range Phalanx</h3>
+                    
+                    <div class="example-box">
+                        <h4>Battle Data:</h4>
+                        <table>
+                            <tr>
+                                <th>Side</th>
+                                <th>Formation</th>
+                                <th>Troops</th>
+                                <th>Losses</th>
+                                <th>Might</th>
+                            </tr>
+                            <tr>
+                                <td>Attacker</td>
+                                <td>Cavalry Phalanx</td>
+                                <td>4.29M</td>
+                                <td>1.31M</td>
+                                <td>63.9M</td>
+                            </tr>
+                            <tr>
+                                <td>Defender</td>
+                                <td>Range Phalanx</td>
+                                <td>4.11M</td>
+                                <td>1.49M</td>
+                                <td>71.5M</td>
+                            </tr>
+                        </table>
+                        
+                        <h4>Troop Distribution:</h4>
+                        <table>
+                            <tr>
+                                <th>Side</th>
+                                <th>Infantry</th>
+                                <th>Range</th>
+                                <th>Cavalry</th>
+                                <th>Comp</th>
+                            </tr>
+                            <tr>
+                                <td>Attacker</td>
+                                <td>1.65M</td>
+                                <td>1.15M</td>
+                                <td>1.49M</td>
+                                <td>857</td>
+                            </tr>
+                            <tr>
+                                <td>Defender</td>
+                                <td>1.49M</td>
+                                <td>1.10M</td>
+                                <td>1.60M</td>
+                                <td>758</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="step">
+                        <h4 class="step-title">What Happened:</h4>
+                        <ul>
+                            <li>Attacker (Cavalry Phalanx) lost 1.2M cavalry (most of front line)</li>
+                            <li>Defender (Range Phalanx) lost ALL range troops (1.1M)</li>
+                            <li>Attacker had minimal infantry losses (106K)</li>
+                            <li>Defender lost moderate infantry (229K) and minimal cavalry (160K)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step">
+                        <h4 class="step-title">Battle Analysis:</h4>
+                        <p>This is a classic Range Phalanx vs Cavalry Phalanx counter matchup. The defender chose Range Phalanx against the attacker's Cavalry Phalanx, which is theoretically correct. However, despite having higher might, the defender lost.</p>
+                        
+                        <div class="note-box">
+                            <strong>Why the Defender Lost:</strong>
+                            <ul>
+                                <li>Complete destruction of range front line</li>
+                                <li>Likely improper hero setup (needed exactly 2 Range heroes)</li>
+                                <li>Possibly wrong familiar configuration</li>
+                                <li>Attacker may have had better stats or troop tiers</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-box">
+                        <h4>Lessons Learned:</h4>
+                        <ul>
+                            <li>Range Phalanx vs Cavalry Phalanx is theoretically good but execution matters</li>
+                            <li>Hero composition is critical - always use 2 Range heroes in Range Phalanx</li>
+                            <li>Consider Infantry Phalanx against Cavalry Phalanx if your Range stats are weaker</li>
+                            <li>Higher might doesn't guarantee victory - formation and setup are crucial</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Battle Report 2: Cavalry Phalanx vs Infantry Phalanx</h3>
+                    
+                    <div class="example-box">
+                        <h4>Battle Data:</h4>
+                        <table>
+                            <tr>
+                                <th>Side</th>
+                                <th>Formation</th>
+                                <th>Troops</th>
+                                <th>Losses</th>
+                                <th>Might</th>
+                            </tr>
+                            <tr>
+                                <td>Attacker</td>
+                                <td>Cavalry Phalanx</td>
+                                <td>4.29M</td>
+                                <td>1.89M</td>
+                                <td>91.1M</td>
+                            </tr>
+                            <tr>
+                                <td>Defender</td>
+                                <td>Infantry Phalanx</td>
+                                <td>4.17M</td>
+                                <td>1.42M</td>
+                                <td>68.4M</td>
+                            </tr>
+                        </table>
+                        
+                        <h4>Outcome:</h4>
+                        <p>Despite having higher might, the attacker suffered higher losses against a defender with lower might.</p>
+                    </div>
+
+                    <div class="step">
+                        <h4 class="step-title">Analysis:</h4>
+                        <ul>
+                            <li>Infantry Phalanx is strong against Cavalry Phalanx</li>
+                            <li>The defender's formation choice correctly countered the attacker</li>
+                            <li>This demonstrates that correct formation choice can overcome might disadvantage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Battle Report 3: Range Phalanx vs Infantry Wedge</h3>
+                    
+                    <div class="example-box">
+                        <h4>Battle Data:</h4>
+                        <table>
+                            <tr>
+                                <th>Side</th>
+                                <th>Formation</th>
+                                <th>Troops</th>
+                                <th>Losses</th>
+                                <th>Might</th>
+                            </tr>
+                            <tr>
+                                <td>Attacker</td>
+                                <td>Range Phalanx</td>
+                                <td>4.29M</td>
+                                <td>1.56M</td>
+                                <td>75.1M</td>
+                            </tr>
+                            <tr>
+                                <td>Defender</td>
+                                <td>Infantry Wedge</td>
+                                <td>4.23M</td>
+                                <td>1.48M</td>
+                                <td>70.6M</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="step">
+                        <h4 class="step-title">Analysis:</h4>
+                        <p>This battle demonstrates the effectiveness of Infantry Wedge in minimizing losses against a Range Phalanx attack. The defender chose Infantry Wedge to spread out their infantry, which makes it more difficult for the Range front to eliminate them quickly.</p>
+                        
+                        <div class="note-box">
+                            <strong>Key Insight:</strong> Infantry Wedge is effective at delaying collapse against Range attacks, giving your troops more time to deal damage.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Battle Report 4: Cavalry Phalanx vs Range Phalanx (Higher Might)</h3>
+                    
+                    <div class="example-box">
+                        <h4>Battle Data:</h4>
+                        <table>
+                            <tr>
+                                <th>Side</th>
+                                <th>Formation</th>
+                                <th>Troops</th>
+                                <th>Losses</th>
+                                <th>Might</th>
+                            </tr>
+                            <tr>
+                                <td>Attacker</td>
+                                <td>Cavalry Phalanx</td>
+                                <td>4.29M</td>
+                                <td>1.53M</td>
+                                <td>73.8M</td>
+                            </tr>
+                            <tr>
+                                <td>Defender</td>
+                                <td>Range Phalanx</td>
+                                <td>3.90M</td>
+                                <td>1.75M</td>
+                                <td>84.4M</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="step">
+                        <h4 class="step-title">Analysis:</h4>
+                        <p>In this battle, the attacker with Cavalry Phalanx defeated a defender with Range Phalanx, despite the defender having significantly higher might. This demonstrates that might isn't always the determining factor in battles.</p>
+                        
+                        <div class="recommendation-box">
+                            <h4>Lessons:</h4>
+                            <ul>
+                                <li>Range Phalanx vs Cavalry Phalanx outcomes depend on many factors beyond just comp</li>
+                                <li>Higher might doesn't guarantee victory</li>
+                                <li>Proper familiar setup and hero composition can reverse expected outcomes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Common Battle Patterns</h3>
+                    
+                    <div class="recommendation-box">
+                        <h4>Key Takeaways from Battle Reports:</h4>
+                        <ul>
+                            <li>Formation choice is often more important than raw might</li>
+                            <li>Hero composition dramatically impacts battle results - especially for Range Phalanx</li>
+                            <li>Wedge formations are effective at minimizing losses in unfavorable matchups</li>
+                            <li>Complete loss of front line troops almost always leads to defeat</li>
+                            <li>Always analyze the specific troop composition, not just the formation name</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="advanced" class="tab-content">
+            <div class="section">
+                <h2 class="section-title">🔥 ADVANCED BATTLE TACTICS</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">1. 🎯 Wedge Formation Tactics</h3>
+                    <div class="example-box">
+                        <h4>Range Wedge vs Range-heavy enemies (e.g., 7112):</h4>
+                        <ul>
+                            <li>Spreads Infantry wider</li>
+                            <li>Makes Cavalry stay back longer</li>
+                            <li>Result: Cavalry survives longer, joins battle later when Range squads are already softened</li>
+                            <li><strong>Range Wedge ruins 7112 comp</strong> mechanisms because Infantry takes longer to collapse</li>
+                        </ul>
+                        
+                        <h4>Infantry Wedge vs Cavalry-heavy enemies:</h4>
+                        <ul>
+                            <li>Wider Infantry spread stalls Cavalry charges longer</li>
+                            <li>Gives Range squads more time to clean up</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">2. ⚡ Common Comp Weaknesses</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Comp Example</th>
+                                <th>Main Weakness</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>659 (6-5-9)</td>
+                                <td>Over-reliant on Cavalry. Weak against strong Range fronts.</td>
+                            </tr>
+                            <tr>
+                                <td>866 (8-6-6)</td>
+                                <td>Tanky, but can be punched by heavy Cav or DPS Range setups.</td>
+                            </tr>
+                            <tr>
+                                <td>4412 (4-4-12)</td>
+                                <td>Destroys Infantry walls. Weak if enemy Range heavy.</td>
+                            </tr>
+                            <tr>
+                                <td>7112 (7-1-12)</td>
+                                <td>Strong versus Range Phalanx. Can be <strong>tricked</strong> by Range Wedge.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">3. 🔍 Retargeting Mechanics</h3>
+                    <p>Retargeting in battle is a critical mechanic that decides who wins in mirror matchups.</p>
+                    
+                    <div class="note-box">
+                        <strong>Important:</strong> In many 4-2-4 vs 4-2-4 Range Phalanx battles, whoever gets their Range killed FIRST often gains battle dynamics in their favor.
+                    </div>
+                    
+                    <p>When Range squads are eliminated:</p>
+                    <ul>
+                        <li>The timing of Range destruction heavily influences battle outcome</li>
+                        <li>Killing enemy Range faster can sometimes be a disservice</li>
+                        <li>If both Range are killed simultaneously, expect a close match</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">4. 🧪 992 and Special Compositions</h3>
+                    <p>The 992 composition is special because:</p>
+                    <ul>
+                        <li>Cavalry acts as buffer against Infantry Blast/Phalanx</li>
+                        <li>Almost always requires carpeting</li>
+                        <li>Frequently used in Emperor and Baron Wonders</li>
+                        <li>Intended to counter 424 variants in Range Phalanx</li>
+                    </ul>
+                    
+                    <div class="note-box">
+                        <strong>Why not use 550?</strong> The 992's Cavalry serves as protection for its Infantry after the 442 winning mechanism is induced. It reduces casualties while still getting reasonable kills.
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">5. ⚔️ Attack vs HP Stats</h3>
+                    <p>Both Attack and HP stats are equally important:</p>
+                    <ul>
+                        <li>HP reduces your losses</li>
+                        <li>Attack increases damage to opponents</li>
+                        <li>Their synergy creates robust outcomes</li>
+                    </ul>
+                    
+                    <div class="recommendation-box">
+                        <h4>Strategic Considerations:</h4>
+                        <ul>
+                            <li>Multiple Rallies/Reduced Losses: HP might be more suitable</li>
+                            <li>Earning Points (KvK, etc.): Attack stats might be better</li>
+                            <li>Increasing Win Chance: Both Attack and HP are ideal</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="formations" class="tab-content">
+            <div class="section">
+                <h2 class="section-title">⚔️ FORMATION GUIDE & MATCHUPS</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">1. 🔄 Formation Basics</h3>
+                    <p>A formation in Lords Mobile determines the order in which troop types receive damage and influences the initial positions of squads on the battlefield.</p>
+                    
+                    <div class="note-box">
+                        <strong>Common Misconception:</strong> The drill in the formation page is misleading due to drastic alterations in troop composition when different formations are selected.
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">2. 🎯 Formation Matchup Chart</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Enemy Type</th>
+                                <th>Best Formation Against Them</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="good">
+                                <td>Heavy Infantry</td>
+                                <td>Cavalry Phalanx</td>
+                                <td>Cavalry melts Infantry quickly</td>
+                            </tr>
+                            <tr class="warning">
+                                <td>Heavy Range</td>
+                                <td>Infantry Phalanx or Range Wedge</td>
+                                <td>Infantry tanks Cav protecting Range; Range Wedge delays collapse</td>
+                            </tr>
+                            <tr class="good">
+                                <td>Heavy Cavalry</td>
+                                <td>Range Phalanx</td>
+                                <td>Range nukes Cavalry before they reach you</td>
+                            </tr>
+                            <tr class="warning">
+                                <td>Balanced Comps</td>
+                                <td>Scout first, adjust accordingly</td>
+                                <td>No assumptions—formation matters more than comp</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">3. 🎭 Formation Logic</h3>
+                    
+                    <div class="example-box">
+                        <h4>Range Phalanx vs. Cavalry Phalanx:</h4>
+                        <p>Range troops attack enemy cavalry multiple times before the enemy infantry reaches the front line, decimating significant cavalry numbers early.</p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Infantry Phalanx vs. Cavalry Phalanx:</h4>
+                        <p>Enemy cavalry can only slip one attack with max strength before getting touched by your ranged units.</p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Range Phalanx vs. Infantry Phalanx:</h4>
+                        <p>Your cavalry reaches enemy infantry before they can engage your ranged units. Enemy infantry never attacks ranged with maximum strength.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">4. 📋 Common Formations by Comp</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Comp</th>
+                                <th>Recommended Formation</th>
+                                <th>Win Against</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>749</td>
+                                <td>Range Phalanx</td>
+                                <td>947 (if both Range Phalanx), Leader's March</td>
+                            </tr>
+                            <tr>
+                                <td>749</td>
+                                <td>Cavalry Phalanx</td>
+                                <td>947/749/424 when enemy uses Range Phalanx</td>
+                            </tr>
+                            <tr>
+                                <td>947</td>
+                                <td>Range Phalanx</td>
+                                <td>Full Infantry compositions</td>
+                            </tr>
+                            <tr>
+                                <td>947</td>
+                                <td>Infantry Phalanx</td>
+                                <td>992/794 when enemy uses Range Phalanx</td>
+                            </tr>
+                            <tr>
+                                <td>794</td>
+                                <td>Range Phalanx</td>
+                                <td>749/947/424 (if both are Range Phalanx)</td>
+                            </tr>
+                            <tr>
+                                <td>794</td>
+                                <td>Range Wedge</td>
+                                <td>Full Cavalry compositions</td>
+                            </tr>
+                            <tr>
+                                <td>424</td>
+                                <td>Range Wedge</td>
+                                <td>Full Infantry default formation</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">5. 🚫 Common Formation Mistakes</h3>
+                    <ul>
+                        <li>Running <strong>Cavalry Phalanx</strong> with not enough Infantry → suicide against Infantry Phalanx</li>
+                        <li>Running <strong>Range Phalanx</strong> with ultra-heavy Range comps → instant collapse if intercepted</li>
+                        <li><strong>Not switching formation after getting scouted</strong> → predictable loss</li>
+                        <li><strong>Misreading formation vs comp</strong> → hitting Range with Cavalry, or Infantry with Range</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="heroes" class="tab-content">
+            <div class="section">
+                <h2 class="section-title">👑 HEROES, FAMILIARS & ADVANCED SETUPS</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">1. 🦸‍♂️ Hero Compositions</h3>
+                    
+                    <div class="example-box">
+                        <h4>Optimal Hero Setups:</h4>
+                        <ul>
+                            <li><strong>122 hero comp</strong> = 1 Infantry Hero / 2 Range Heroes / 2 Cavalry Heroes (correct basic comp)</li>
+                            <li><strong>221 hero comp</strong> = 2 Infantry / 2 Range / 1 Cavalry Hero</li>
+                        </ul>
+                        
+                        <div class="warning">
+                            <strong>Warning:</strong> Using only 1 Range Hero in a Range fight (like a 212 comp) = DEATH in Range mirror wars because only one squad carries real damage early.
+                        </div>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>The Two Range Heroes Rule:</h4>
+                        <p>Always use <strong>exactly two Range Heroes</strong> when using Range Phalanxes. This applies to 4-2-4, 4-4-2, or 2-4-4 variants.</p>
+                        <p>Hero composition dramatically affects retargeting sequences and squad positioning in battles.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">2. 🧮 Troop Counting Guide</h3>
+                    <p>Quick reference for troop count to comp conversion:</p>
+                    <ul>
+                        <li>700K-800K troops = 4 parts</li>
+                        <li>900K-1M troops = 5 parts</li>
+                        <li>1.3M-1.4M troops = 6 parts</li>
+                        <li>1.4M-1.55M troops = 7 parts</li>
+                        <li>1.6M-1.7M troops = 8 parts</li>
+                        <li>1.7M-1.9M troops = 9 parts</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Example Calculation:</h4>
+                        <p>A 659 comp would be approximately:</p>
+                        <ul>
+                            <li>1.5M Infantry</li>
+                            <li>900K Range</li>
+                            <li>1.6M Cavalry</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">3. 🛡️ Gear and Stat Considerations</h3>
+                    
+                    <div class="recommendation-box">
+                        <h4>When Defending (659 Example):</h4>
+                        <ul>
+                            <li>Against 659: Go Cavalry Phalanx if enemy using saberfang/cavalry gear, Range Phalanx otherwise</li>
+                            <li>Against 208: Go Range Wedge</li>
+                            <li>Against 055: Go Range Phalanx</li>
+                            <li>Against 884: Go Range Phalanx if they have 900K+ Cavalry (consider pulling)</li>
+                            <li>Against 965-875: Go Range Phalanx</li>
+                            <li>Against 868: Depends on your phalanx and enemy phalanx strengths</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>Key Stat Balancing:</h4>
+                        <p>Both Attack and HP are equally important for different scenarios:</p>
+                        <ul>
+                            <li>Multiple rallies: Focus on HP to reduce losses</li>
+                            <li>Point earning (KvK): Focus on Attack stats</li>
+                            <li>Overall combat effectiveness: Balance both</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">4. ✨ Familiars Impact</h3>
+                    <p>Pact 5 familiars can dramatically affect battle outcomes:</p>
+                    <ul>
+                        <li>Familiars activate at different timings based on troop death</li>
+                        <li>Their activation can shift retargeting sequences</li>
+                        <li>In 442 vs 424 scenarios, familiar timing often determines winners</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Familiar Strategies:</h4>
+                        <ul>
+                            <li>For 749/947: 055 comp should switch to Range Phalanx</li>
+                            <li>For 794: 4016 only for attacking 424-like comps</li>
+                            <li>For 424: 055 only for attacking 424-like comps</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            🚀 Lords Mobile Wonder War Strategy Guide | Created from expert player knowledge
+        </div>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            // Hide all tab content
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // Deactivate all tabs
+            const tabs = document.getElementsByClassName("tab");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            // Show the selected tab content
+            document.getElementById(tabName).classList.add("active");
+            
+            // Activate the clicked tab
+            event.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
